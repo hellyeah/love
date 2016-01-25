@@ -10,7 +10,7 @@ import UIKit
 
 class LoveCell: UITableViewCell {
     
-    @IBOutlet weak var loveLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

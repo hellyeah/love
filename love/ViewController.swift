@@ -7,19 +7,33 @@
 //
 
 import UIKit
+import Parse
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+
+    let CellIdentifier = "com.fontebot.LoveCell"
     
     //data will end up being friends - do it by phone number so we can twilio sms them
     let data = ["Tom Currier", "Ava Huang", "Dani Grant", "Ashley Qian",
-        "Kevin Rodengen"]
+        "Kevin Rodengen", "Cole Kushner Bobbity Boopity"]
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.dataSource = self
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.delegate = self
+        
+        let testObject = PFObject(className: "TestObject")
+        testObject["foo"] = "bar"
+        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+            print("Object has been saved.")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,13 +42,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
-        return cell
+        let cell = tableView.dequeueReusableCellWithIdentifier(CellIdentifier, forIndexPath: indexPath) as? LoveCell
+        cell!.nameLabel?.text = data[indexPath.row]
+        if (indexPath.row % 2 == 0) {
+            cell!.backgroundColor = UIColor.redColor()
+        } else {
+            cell!.backgroundColor = UIColor.magentaColor()
+        }
+
+        return cell!
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        // do something here
+        print("Selected \(data[indexPath.row])")
     }
 
 
