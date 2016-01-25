@@ -12,6 +12,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var tableView: UITableView!
     
+    //data will end up being friends - do it by phone number so we can twilio sms them
     let data = ["Tom Currier", "Ava Huang", "Dani Grant", "Ashley Qian",
         "Kevin Rodengen"]
     
